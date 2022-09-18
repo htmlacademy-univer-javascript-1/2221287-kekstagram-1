@@ -13,7 +13,7 @@ function randomInteger(min, max) {
 }
 
 //Функция для проверки максимальной длины строки
-function commentLength(testString, maxLength) {
+function textLength(testString, maxLength) {
   if(testString.length <= maxLength) {
     return true;
   } return false;
