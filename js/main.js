@@ -1,20 +1,19 @@
 //Функция, возвращающая случайное целое число из переданного диапазона включительно - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
-function randomInteger(min, max) {
-  // случайное число от min до (max+1)
-  let rand = min + Math.random() * (max + 1 - min);
-  if(rand < 0){
-    return('Запись отрицательного числа некорректна');
-  } else {
-    if (min >= max) {
-      return('Введите данные в порядке возрастания и проверьте, не одинаковы ли они');
-    }
-  } return Math.floor(rand);
-}
+const getRandomInteger = (min,max) => {
+  if (min < 0 || max < 0) {
+    return -1;
+  }
+
+  if (min > max) {
+    [min, max] = [max, min];
+  }
+  return Math.floor(Math.random() * (max - min +1)) + min;
+};
+
 
 //Функция для проверки максимальной длины строки
-function textLength(testString, maxLength) {
-  if(testString.length <= maxLength) {
-    return true;
-  } return false;
-}
+const checkStringLength = (str, max) => str.length <= max;
+
+console.log(getRandomInteger(1,2));
+console.log(checkStringLength('Привет, VS!', 5));
