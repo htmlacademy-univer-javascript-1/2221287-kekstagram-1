@@ -1,4 +1,10 @@
-//Функция, возвращающая случайное целое число из переданного диапазона включительно - https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const COUNT = 25;
+const NAMES = ['Артём', 'Евгений', 'Александр'];
+
+const Likes = {
+  MIN: 15,
+  MAX: 200
+};
 
 const getRandomInteger = (min,max) => {
   if (min < 0 || max < 0) {
@@ -11,9 +17,24 @@ const getRandomInteger = (min,max) => {
   return Math.floor(Math.random() * (max - min +1)) + min;
 };
 
+const addComments = () => ({
+  id: 135,
+  avatar: 'img/avatar-6.svg',
+  message: 'В целом всё неплохо. Но не всё.',
+  name: NAMES[getRandomInteger(0, NAMES.length - 1)]
+});
 
-//Функция для проверки максимальной длины строки
-const checkStringLength = (str, max) => str.length <= max;
+const addPhoto = (id) => {
+  id++;
+  return {
+    id: id,
+    url: `img/avatar-${id + 1}.svg`,
+    description: 'В целом всё неплохо. Но не всё.',
+    likes: getRandomInteger(Likes.MIN, Likes.MAX),
+    comments: addComments()
+  };
+};
 
-console.log(getRandomInteger(1,2));
-console.log(checkStringLength('Привет, VS!', 5));
+const photos = Array.from({length: COUNT}, addPhoto);
+
+export {photos};
