@@ -1,1 +1,4 @@
-import {arrayObjects} from  './data.js';
+import './utils.js';
+import './pictures.js';
+import { photos } from './data.js';
+import './pictures.js';

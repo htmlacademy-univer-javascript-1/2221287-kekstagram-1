@@ -1,4 +1,4 @@
-import {getRandomInteger} from  './utils.js';
+import { getRandomInteger } from  './utils.js';
 
 const COUNT = 25;
 
@@ -8,7 +8,7 @@ const NAMES = [
   'Александр'
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -17,7 +17,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const descriptions = [
+const DESCRIPTIONS = [
   'Фотокарточка',
   'Получился случайный снимок!',
   'Как вам эти фотографии?'
@@ -28,15 +28,14 @@ const Likes = {
   MAX: 200
 };
 
-const arrayObjects = [];
-
-const arrayComments = (item) => {
+const photos = [];
+const commentsArray= (count) => {
   const array = [];
-  for (let i = 0; i < item; i++){
+  for(let i = 0; i<count; i++){
     array.push({
       id: i,
-      avatar: 'img/avatar-{{getRandomInt(1, 6)}}.svg',
-      message: MESSAGE[getRandomInteger(0, MESSAGE.length - 1)],
+      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+      message: MESSAGES[getRandomInteger(0, MESSAGES.length- 1)],
       name: NAMES[getRandomInteger(0, NAMES.length - 1)]
     });
   }
@@ -44,17 +43,17 @@ const arrayComments = (item) => {
 };
 
 const addPhotos = () => {
-  for (let i = 0; i < COUNT; i++){
-    arrayObjects.push({
+  for(let i = 0; i < COUNT; i++){
+    photos.push({
       id: i,
-      url: 'photos/{{i + 1}}.jpg',
-      description: descriptions[getRandomInteger(0, descriptions.length - 1)],
+      url: `photos/${i + 1}.jpg`,
+      description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
       likes: getRandomInteger(Likes.MIN, Likes.MAX),
-      comments: arrayComments(getRandomInteger(0, 2))
+      comments: commentsArray(getRandomInteger(0,2))
     });
   }
 };
 
 addPhotos();
 
-export {arrayObjects};
+export {photos};
