@@ -13,49 +13,47 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__error'
 });
 
-const inputHashtags = document.querySelector('.text__hashtags');
+const hashtags = document.querySelector('.text__hashtags');
 
 let errorMessage = '';
 const error = () => errorMessage;
 
 const hashtagsHandler = (value) => {
   errorMessage = '';
-
-  const inputText = value.toLowerCase().trim();
-
-  if (!inputText){
+  const text = value.toLowerCase().trim();
+  if (!text){
     return true;
   }
 
-  const inputArray = inputText.split(/\s+/);
+  const input = text.split(/\s+/);
 
-  if(inputArray.legth === 0){
+  if(input.legth === 0){
     return true;
   }
 
   const rules = [
     {
-      check: inputArray.some((item) => item.indexOf('#', 1) >= 1),
+      check: input.some((item) => item.indexOf('#', 1) >= 1),
       error: 'Хэш-теги разделяются пробелами',
     },
     {
-      check: inputArray.some((item) => item[0] !=='#'),
-      error: 'Хэш-тек должен начинается с символа #',
+      check: input.some((item) => item[0] !=='#'),
+      error: 'Хэш-тек должен начинается с #',
     },
     {
-      check: inputArray.some((item, num, arr) => arr.includes(item, num + 1)),
+      check: input.some((item, num, arr) => arr.includes(item, num +1)),
       error: 'Хэш-тег не должен повторяться',
     },
     {
-      check: inputArray.some((item) => item.length > MAX_SYMBOLS),
-      error: `Максимальная длина одного хэш-тега ${MAX_SYMBOLS} символов, включая решетку`,
+      check: input.some((item) => item.length > MAX_SYMBOLS),
+      error: `Максимальная длина хэш-тега, включая решетку ${MAX_SYMBOLS}`,
     },
     {
-      check: inputArray.length > MAX_HASHTAGS,
+      check: input.length > MAX_HASHTAGS,
       error: `Нельзя указать больше ${MAX_HASHTAGS} хэш-тегов`,
     },
     {
-      check: inputArray.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
+      check: input.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
       error: 'Хеш-тег содержит недопустимые символы ',
     },
   ];
@@ -70,9 +68,9 @@ const hashtagsHandler = (value) => {
 
 };
 
-pristine.addValidator(inputHashtags, hashtagsHandler, error, 2, false);
+pristine.addValidator(hashtags, hashtagsHandler, error, 2, false);
 
-inputHashtags.addEventListener('input', () => {
+hashtags.addEventListener('input', () => {
   if(pristine.validate()) {
     button.disabled = false;
   }
@@ -80,6 +78,7 @@ inputHashtags.addEventListener('input', () => {
     button.disabled = true;
   }
 });
+
 form.addEventListener('submit', (evt) =>{
   evt.preventDefault();
 

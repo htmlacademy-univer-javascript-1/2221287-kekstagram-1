@@ -27,4 +27,5 @@ const renderPhotos = () => {
   });
   picture.appendChild(newFragment);
 };
+
 renderPhotos();
