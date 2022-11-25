@@ -88,7 +88,7 @@ const showBigPictures = (photo) =>{
 
   addComments(photo.comments, arrayLi);
 
-  if (photo.comments.length <= 5){
+  if (photo.comments.length <= COMMENTS_COUNT){
     showCom.textContent = photo.comments.length ;
     updateMore.classList.add('hidden');
   }
