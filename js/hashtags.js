@@ -71,12 +71,7 @@ const hashtagsHandler = (value) => {
 pristine.addValidator(hashtags, hashtagsHandler, error, 2, false);
 
 hashtags.addEventListener('input', () => {
-  if(pristine.validate()) {
-    button.disabled = false;
-  }
-  else{
-    button.disabled = true;
-  }
+  button.disabled = !pristine.validate();
 });
 
 form.addEventListener('submit', (evt) =>{
@@ -84,3 +79,5 @@ form.addEventListener('submit', (evt) =>{
 
   pristine.validate();
 });
+
+export {form};

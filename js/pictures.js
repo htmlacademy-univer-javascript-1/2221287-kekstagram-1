@@ -1,4 +1,3 @@
-import {photos} from './data.js';
 import { showBigPictures } from './showBigPictures.js';
 const picture = document.querySelector('.pictures');
 
@@ -10,14 +9,10 @@ const newFragment = document.createDocumentFragment();
 const renderPhoto = (photo) => {
   const item = templatePictures.cloneNode(true);
 
-  const img = item.querySelector('.picture__img');
-  img.src = photo.url;
+  item.querySelector('.picture__img').src = photo.url;
+  item.querySelector('.picture__likes').textContent = photo.likes;
+  item.querySelector('.picture__comments').textContent = photo.comments.length;
 
-  const likes = item.querySelector('.picture__likes');
-  likes.textContent = photo.likes;
-
-  const comments = item.querySelector('.picture__comments');
-  comments.textContent = photo.comments.length;
   item.addEventListener('click', (evt) =>{
     evt.preventDefault();
     showBigPictures(photo);
@@ -25,11 +20,11 @@ const renderPhoto = (photo) => {
   return item;
 };
 
-const renderPhotos = () => {
+const renderPhotos = (photos) => {
   photos.forEach((photo) => {
     newFragment.appendChild(renderPhoto(photo));
   });
   picture.appendChild(newFragment);
 };
 
-renderPhotos();
+export {renderPhotos};
