@@ -5,7 +5,7 @@ let currentCount = COMMENTS_COUNT;
 const arrayLi = [];
 
 const popup = document.querySelector('.big-picture');
-const closeButton = document.querySelector('.big-picture__cancel');
+const closeButton = popup.querySelector('.big-picture__cancel');
 const updateMore = document.querySelector('.comments-loader');
 
 const commentAbout = popup.querySelector('.social__comments');

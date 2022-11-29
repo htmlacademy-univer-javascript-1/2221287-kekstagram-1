@@ -1,9 +1,10 @@
 import { imageUpload } from './formUpload.js';
+import { form } from './hashtags.js';
 
 const START_EFFECT  = 'none';
 
-const effects = document.querySelector('.effects__list');
-const slider = document.querySelector('.img-upload__effect-level');
+const effects = form.querySelector('.effects__list');
+const slider = form.querySelector('.img-upload__effect-level');
 
 
 let nowEffect = START_EFFECT;
@@ -19,7 +20,7 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-slider.setAttribute('disabled', true);
+slider.disabled = true;
 
 
 const reSlider = (effect) =>{
@@ -28,31 +29,33 @@ const reSlider = (effect) =>{
   let stepValue = 0.1;
   let nameOfEffect = '';
   let type = '';
-  if(effect === 'chrome'){
-    nameOfEffect = 'grayscale';
-  }
-  if(effect === 'sepia'){
-    nameOfEffect = 'sepia';
-  }
-  if(effect === 'marvin'){
-    maxValue = 100;
-    minValue = 0;
-    stepValue = 1;
-    type = '%';
-    nameOfEffect = 'invert';
-  }
-  if(effect === 'phobos'){
-    maxValue = 3;
-    minValue = 0;
-    stepValue = 0.1;
-    type = 'px';
-    nameOfEffect = 'blur';
-  }
-  if(effect === 'heat'){
-    maxValue = 3;
-    minValue = 1;
-    stepValue = 0.1;
-    nameOfEffect = 'brightness';
+
+  switch (effect) {
+    case 'chrome':
+      nameOfEffect = 'grayscale';
+      break;
+    case 'sepia':
+      nameOfEffect = 'sepia';
+      break;
+    case 'marvin':
+      maxValue = 100;
+      minValue = 0;
+      stepValue = 1;
+      type = '%';
+      nameOfEffect = 'invert';
+      break;
+    case 'phobos':
+      maxValue = 3;
+      minValue = 0;
+      stepValue = 0.1;
+      type = 'px';
+      nameOfEffect = 'blur';
+      break;
+    case 'heat':
+      maxValue = 3;
+      minValue = 1;
+      stepValue = 0.1;
+      nameOfEffect = 'brightness';
   }
 
   slider.noUiSlider.updateOptions({
@@ -79,29 +82,29 @@ const reSlider = (effect) =>{
   });
 };
 
-const takeEffect = (effect) =>{
+const takeEffect = (effect) => {
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   imageUpload.classList.add(`effects__preview--${effect}`);
   nowEffect = effect;
 
-  if (effect === 'none'){
-    slider.setAttribute('disabled',false);
+  if (effect === 'none') {
+    slider.disabled = false;
     imageUpload.style.filter = '';
   }
-  else{
-    slider.removeAttribute('disabled');
+  else {
+    slider.disabled = null;
     reSlider(effect);
   }
 };
 
-const addEffect = (evt) =>{
+const onAddingEffect = (evt) => {
   const targetEffect = evt.target;
-  if(targetEffect.name === 'effect'){
+  if (targetEffect.name === 'effect') {
     takeEffect(targetEffect.value);
   }
 };
 const restartEffects = () => {
-  effects.removeEventListener('click',addEffect);
+  effects.removeEventListener('click',onAddingEffect);
   imageUpload.classList.remove(`effects__preview--${nowEffect}`);
   slider.noUiSlider.updateOptions({
     range: {
@@ -112,11 +115,11 @@ const restartEffects = () => {
     step: 1,
     connect: 'lower',
   });
-  slider.setAttribute('disabled', true);
+  slider.disabled = true;
 };
 
-const doEffects = () =>{
+const doEffectsHandler = () => {
   imageUpload.style.filter = '';
-  effects.addEventListener('click', addEffect);
+  effects.addEventListener('click', onAddingEffect);
 };
-export {doEffects, restartEffects};
+export {doEffectsHandler, restartEffects};
