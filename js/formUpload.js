@@ -4,6 +4,7 @@ import { scalingPhotos } from './scalingPhoto.js';
 import { setEffects } from './effectsOnPhoto.js';
 import { setData } from './fetch.js';
 import { addPostMessages, showSuccessMessage, closeMessage, showErrorMessage } from './postMessages.js';
+import { uploadUserPicture} from './user-picture.js';
 
 const form = document.querySelector('.img-upload__form');
 
@@ -17,6 +18,7 @@ const clearForm = () => {
   uploadingOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   uploadingControl.value = '';
+
   clearHashtagsField();
   uploadingComments.value = '';
 
@@ -42,8 +44,12 @@ uploadingClose.addEventListener('click', closeForm);
 
 const onUploadClick = () => {
   document.addEventListener('keydown', onEscapeKeyDown);
+
+  uploadUserPicture(uploadingControl.files[0]);
+
   uploadingOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
+
   scalingPhotos();
   setEffects();
   uploadHashtagInput();
